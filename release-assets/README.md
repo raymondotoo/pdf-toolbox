@@ -8,6 +8,7 @@ Use these subfolders:
 
 - `apple-silicon/`
 - `intel/`
+- `legacy-intel/`
 
 Typical upload flow:
 

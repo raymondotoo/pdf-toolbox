@@ -1,0 +1,6 @@
+pypdf>=5.0.0,<6.0.0
+numpy==1.24.4
+opencv-python-headless==4.2.0.34
+PyMuPDF==1.23.8
+py2app>=0.28.0,<0.29.0
+importlib_resources>=6.4.5

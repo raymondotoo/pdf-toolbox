@@ -14,10 +14,11 @@ It includes:
 
 ## macOS builds
 
-This project is prepared for two macOS release tracks:
+This project is prepared for three macOS release tracks:
 
 - Apple Silicon (`arm64`) for M-series Macs
-- Intel (`x86_64`) for older Macs
+- Intel (`x86_64`) for older Intel Macs on newer supported macOS releases
+- Legacy Intel (`x86_64`) for Intel Macs that still need macOS 10.14.6 Mojave support
 
 Important:
 
@@ -58,6 +59,12 @@ Build Intel release:
 
 ```bash
 ./scripts/build_intel_release.sh
+```
+
+Build legacy Intel / Mojave release:
+
+```bash
+PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8 ./scripts/build_legacy_intel_release.sh
 ```
 
 ## Publishing to GitHub

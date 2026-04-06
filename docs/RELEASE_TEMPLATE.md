@@ -13,6 +13,7 @@ PDF Toolbox is a standalone macOS utility for:
 
 - Apple Silicon: `PDF-Toolbox-macOS-Apple-Silicon-1.0.0.zip`
 - Intel: `PDF-Toolbox-macOS-Intel-1.0.0.zip`
+- Legacy Intel: `PDF-Toolbox-macOS-Legacy-Intel-1.0.0.zip`
 
 ## Install
 
@@ -24,5 +25,6 @@ PDF Toolbox is a standalone macOS utility for:
 ## Notes
 
 - Apple Silicon is for M-series Macs
-- Intel is for older Intel Macs
+- Intel is for older Intel Macs on macOS 11+
+- Legacy Intel is for Intel Macs that still need macOS 10.14.6
 - If macOS blocks launch, go to `System Settings > Privacy & Security` and choose `Open Anyway`

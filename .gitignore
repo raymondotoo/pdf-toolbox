@@ -6,6 +6,7 @@ __pycache__/
 
 .venv/
 .venv-*/
+.conda-*/
 
 build/
 dist/

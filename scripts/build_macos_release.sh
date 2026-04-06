@@ -10,11 +10,20 @@ RELEASE_LABEL="${PDF_TOOLBOX_RELEASE_LABEL:-${TARGET_ARCH}}"
 RELEASE_DIR="${PDF_TOOLBOX_RELEASE_DIR:-${TARGET_ARCH}}"
 MIN_MACOS="${PDF_TOOLBOX_MIN_MACOS:-12.0}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
-BUILD_ENV="${ROOT_DIR}/.venv-mac-app-${TARGET_ARCH}"
+REQUIREMENTS_FILE="${PDF_TOOLBOX_REQUIREMENTS_FILE:-${ROOT_DIR}/requirements-mac-app.txt}"
+BUILD_ENV="${ROOT_DIR}/${PDF_TOOLBOX_BUILD_ENV_NAME:-.venv-mac-app-${TARGET_ARCH}}"
 APP_BUNDLE="${ROOT_DIR}/dist/${APP_NAME}.app"
 FRAMEWORKS_DIR="${APP_BUNDLE}/Contents/Frameworks"
 DIST_ZIP="${ROOT_DIR}/dist/${APP_NAME_SLUG}-macOS-${RELEASE_LABEL}-${VERSION}.zip"
 STAGED_ZIP="${ROOT_DIR}/release-assets/${RELEASE_DIR}/${APP_NAME_SLUG}-macOS-${RELEASE_LABEL}-${VERSION}.zip"
+
+if [[ -n "${PDF_TOOLBOX_DYLD_FRAMEWORK_PATH:-}" ]]; then
+  export DYLD_FRAMEWORK_PATH="${PDF_TOOLBOX_DYLD_FRAMEWORK_PATH}"
+fi
+
+if [[ -n "${PDF_TOOLBOX_DYLD_LIBRARY_PATH:-}" ]]; then
+  export DYLD_LIBRARY_PATH="${PDF_TOOLBOX_DYLD_LIBRARY_PATH}"
+fi
 
 copy_if_exists() {
   local source_path="$1"
@@ -43,7 +52,7 @@ fi
 if [[ "${PDF_TOOLBOX_UPGRADE_PIP:-0}" == "1" ]]; then
   "${BUILD_ENV}/bin/python" -m pip install --upgrade pip
 fi
-"${BUILD_ENV}/bin/pip" install -r "${ROOT_DIR}/requirements-mac-app.txt"
+"${BUILD_ENV}/bin/pip" install -r "${REQUIREMENTS_FILE}"
 
 export PDF_TOOLBOX_APP_NAME="${APP_NAME}"
 export PDF_TOOLBOX_VERSION="${VERSION}"

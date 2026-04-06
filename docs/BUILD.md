@@ -3,7 +3,7 @@
 ## Requirements
 
 - macOS
-- Python 3.12 or another compatible Python with `tkinter`
+- Python with `tkinter`
 - Xcode Command Line Tools
 - Network access to install Python packages when building for the first time
 
@@ -44,6 +44,41 @@ If you want the build script to refresh `pip` inside the build environment first
 
 ```bash
 PDF_TOOLBOX_UPGRADE_PIP=1 ./scripts/build_intel_release.sh
+```
+
+## Build legacy Intel / Mojave release
+
+For Intel Macs that need macOS `10.14.6` support, use:
+
+- an actual Intel Mac, or
+- a true Rosetta / x86_64 Python 3.8 environment
+- preferably the official Python.org 64-bit Intel Python 3.8 installer
+
+Run:
+
+```bash
+PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8 ./scripts/build_legacy_intel_release.sh
+```
+
+This creates:
+
+- `dist/PDF Toolbox.app`
+- `dist/PDF-Toolbox-macOS-Legacy-Intel-1.0.0.zip`
+- `release-assets/legacy-intel/PDF-Toolbox-macOS-Legacy-Intel-1.0.0.zip`
+
+This legacy track uses a separate dependency set in `requirements-mac-app-legacy.txt`
+because Mojave support requires older compatible OpenCV / NumPy / PyMuPDF wheels.
+
+If you are creating the legacy build from an extracted Python.org framework on Apple Silicon
+instead of installing that Python into `/Library/Frameworks`, also set:
+
+```bash
+TCL_LIBRARY=/path/to/Python.framework/Versions/3.8/lib/tcl8.6
+TK_LIBRARY=/path/to/Python.framework/Versions/3.8/lib/tk8.6
+PDF_TOOLBOX_DYLD_FRAMEWORK_PATH=/path/to/Library/Frameworks
+PDF_TOOLBOX_DYLD_LIBRARY_PATH=/path/to/Python.framework/Versions/3.8/lib
+PYTHON_BIN=/path/to/Python.framework/Versions/3.8/bin/python3.8
+./scripts/build_legacy_intel_release.sh
 ```
 
 ## Important note about older macOS versions
