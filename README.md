@@ -78,4 +78,5 @@ Detailed instructions:
 
 See [`COPYRIGHT.txt`](./COPYRIGHT.txt).
 
-If you want to allow source reuse by the public, add an explicit software license before publishing the repository.
+This repository is currently shared without an open-source license.
+If you want to allow public source reuse later, add an explicit `LICENSE` file.

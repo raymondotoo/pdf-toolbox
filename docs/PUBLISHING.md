@@ -54,6 +54,6 @@ On GitHub:
 Check these items:
 
 - remove any personal PDFs or private documents
-- confirm the copyright text is correct
-- choose a license if you want to allow public source reuse
+- confirm the copyright / proprietary notice is correct
+- add an explicit open-source license only if you want to allow public source reuse
 - test both Apple Silicon and Intel downloads

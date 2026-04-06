@@ -1,10 +1,15 @@
 PDF Toolbox
 Designed by Raymond Otoo Ph.D.
 
-Copyright 2026 Raymond Otoo Ph.D.
+Copyright (c) 2026 Raymond Otoo Ph.D.
 All rights reserved.
 
-Note:
+This repository is published without an open-source license.
+Unless a separate written license is provided for a specific file,
+third-party component, or release asset, all rights in PDF Toolbox
+remain with Raymond Otoo Ph.D.
+
+Public availability of this repository does not, by itself, grant
+permission to reuse, modify, or redistribute the source code.
+
 This file is a copyright notice, not an open-source license.
-If you want others to reuse, modify, or redistribute the source code,
-add an explicit license before publishing the repository.
