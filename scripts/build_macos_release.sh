@@ -40,7 +40,9 @@ if [[ ! -d "${BUILD_ENV}" ]]; then
   "${PYTHON_BIN}" -m venv "${BUILD_ENV}"
 fi
 
-"${BUILD_ENV}/bin/python" -m pip install --upgrade pip
+if [[ "${PDF_TOOLBOX_UPGRADE_PIP:-0}" == "1" ]]; then
+  "${BUILD_ENV}/bin/python" -m pip install --upgrade pip
+fi
 "${BUILD_ENV}/bin/pip" install -r "${ROOT_DIR}/requirements-mac-app.txt"
 
 export PDF_TOOLBOX_APP_NAME="${APP_NAME}"

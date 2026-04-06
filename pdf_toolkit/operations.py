@@ -28,7 +28,7 @@ DATE_PREFIX_RE = re.compile(r"^(?P<date>\d{8})")
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp"}
 
 
-@dataclass(slots=True)
+@dataclass
 class WatermarkOptions:
     dpi: int = 300
     password: str | None = None
@@ -44,7 +44,7 @@ class WatermarkOptions:
     jpeg_quality: int = 85
 
 
-@dataclass(slots=True)
+@dataclass
 class CompressionOptions:
     dpi: int = 200
     password: str | None = None

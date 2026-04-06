@@ -40,6 +40,12 @@ This creates:
 - `dist/PDF-Toolbox-macOS-Intel-1.0.0.zip`
 - `release-assets/intel/PDF-Toolbox-macOS-Intel-1.0.0.zip`
 
+If you want the build script to refresh `pip` inside the build environment first, run:
+
+```bash
+PDF_TOOLBOX_UPGRADE_PIP=1 ./scripts/build_intel_release.sh
+```
+
 ## Important note about older macOS versions
 
 “Older Macs” can mean two different things:
