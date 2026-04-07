@@ -6,23 +6,13 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Iterable
 
-try:
-    import cv2  # type: ignore
-except ModuleNotFoundError:
-    cv2 = None  # type: ignore[assignment]
+cv2 = None
+fitz = None
+np = None
 
-try:
-    import fitz  # type: ignore
-except ModuleNotFoundError:
-    try:
-        import pymupdf as fitz  # type: ignore
-    except ModuleNotFoundError:
-        fitz = None  # type: ignore[assignment]
-
-try:
-    import numpy as np
-except ModuleNotFoundError:
-    np = None  # type: ignore[assignment]
+_cv2_import_error: Exception | None = None
+_fitz_import_error: Exception | None = None
+_numpy_import_error: Exception | None = None
 
 DATE_PREFIX_RE = re.compile(r"^(?P<date>\d{8})")
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".webp"}
@@ -75,6 +65,66 @@ def load_pdf_backend():
             return None, None
 
 
+def load_cv2():
+    global cv2, _cv2_import_error
+    if cv2 is not None:
+        return cv2
+    if _cv2_import_error is not None:
+        return None
+
+    try:
+        import cv2 as cv2_module  # type: ignore
+    except Exception as exc:
+        _cv2_import_error = exc
+        return None
+
+    cv2 = cv2_module
+    return cv2
+
+
+def load_fitz():
+    global fitz, _fitz_import_error
+    if fitz is not None:
+        return fitz
+    if _fitz_import_error is not None:
+        return None
+
+    try:
+        import fitz as fitz_module  # type: ignore
+    except Exception:
+        try:
+            import pymupdf as fitz_module  # type: ignore
+        except Exception as exc:
+            _fitz_import_error = exc
+            return None
+
+    fitz = fitz_module
+    return fitz
+
+
+def load_numpy():
+    global np, _numpy_import_error
+    if np is not None:
+        return np
+    if _numpy_import_error is not None:
+        return None
+
+    try:
+        import numpy as numpy_module  # type: ignore
+    except Exception as exc:
+        _numpy_import_error = exc
+        return None
+
+    np = numpy_module
+    return np
+
+
+def format_dependency_error(exc: Exception | None) -> str:
+    if exc is None:
+        return ""
+    return f"{type(exc).__name__}: {exc}"
+
+
 def require_pdf_backend():
     pdf_reader, pdf_writer = load_pdf_backend()
     if pdf_reader is None or pdf_writer is None:
@@ -85,25 +135,42 @@ def require_pdf_backend():
 
 
 def require_cv2():
-    if cv2 is None:
-        raise RuntimeError(
-            "OpenCV is required for raster processing. Install `opencv-python-headless`."
-        )
-    return cv2
+    cv2_module = load_cv2()
+    if cv2_module is None:
+        details = format_dependency_error(_cv2_import_error)
+        message = "OpenCV is required for raster processing."
+        if details:
+            message += f" This Mac could not load the bundled OpenCV library. {details}"
+        else:
+            message += " Install `opencv-python-headless`."
+        raise RuntimeError(message) from _cv2_import_error
+    return cv2_module
 
 
 def require_fitz():
-    if fitz is None:
-        raise RuntimeError(
-            "PyMuPDF is required for PDF raster processing. Install `pymupdf`."
-        )
-    return fitz
+    fitz_module = load_fitz()
+    if fitz_module is None:
+        details = format_dependency_error(_fitz_import_error)
+        message = "PyMuPDF is required for PDF raster processing."
+        if details:
+            message += f" This Mac could not load the bundled PyMuPDF library. {details}"
+        else:
+            message += " Install `pymupdf`."
+        raise RuntimeError(message) from _fitz_import_error
+    return fitz_module
 
 
 def require_numpy():
-    if np is None:
-        raise RuntimeError("NumPy is required for raster processing. Install `numpy`.")
-    return np
+    numpy_module = load_numpy()
+    if numpy_module is None:
+        details = format_dependency_error(_numpy_import_error)
+        message = "NumPy is required for raster processing."
+        if details:
+            message += f" This Mac could not load the bundled NumPy library. {details}"
+        else:
+            message += " Install `numpy`."
+        raise RuntimeError(message) from _numpy_import_error
+    return numpy_module
 
 
 def resolve_pdf_paths(files: Iterable[pathlib.Path | str], minimum: int = 1) -> list[pathlib.Path]:

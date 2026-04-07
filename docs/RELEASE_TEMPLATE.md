@@ -26,5 +26,5 @@ PDF Toolbox is a standalone macOS utility for:
 
 - Apple Silicon is for M-series Macs
 - Intel is for older Intel Macs on macOS 11+
-- Legacy Intel is for Intel Macs that still need macOS 10.14.6
+- Legacy Intel is for Intel Macs that still need macOS 10.14 Mojave
 - If macOS blocks launch, go to `System Settings > Privacy & Security` and choose `Open Anyway`

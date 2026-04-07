@@ -37,7 +37,7 @@ if [[ "${PYTHON_ARCH}" != "x86_64" ]]; then
 fi
 
 if [[ "${PYTHON_VERSION}" != "3.8" ]]; then
-  echo "Legacy Intel builds for macOS 10.14.6 currently expect Python 3.8."
+  echo "Legacy Intel builds for macOS 10.14 currently expect Python 3.8."
   echo "Set PYTHON_BIN to an x86_64 Python 3.8 interpreter and rerun."
   exit 1
 fi
@@ -46,7 +46,7 @@ export PYTHON_BIN="${SELECTED_PYTHON}"
 export PDF_TOOLBOX_TARGET_ARCH="x86_64"
 export PDF_TOOLBOX_RELEASE_LABEL="Legacy-Intel"
 export PDF_TOOLBOX_RELEASE_DIR="legacy-intel"
-export PDF_TOOLBOX_MIN_MACOS="${PDF_TOOLBOX_MIN_MACOS:-10.14.6}"
+export PDF_TOOLBOX_MIN_MACOS="${PDF_TOOLBOX_MIN_MACOS:-10.14.0}"
 export PDF_TOOLBOX_REQUIREMENTS_FILE="${ROOT_DIR}/requirements-mac-app-legacy.txt"
 export PDF_TOOLBOX_BUILD_ENV_NAME=".venv-mac-app-legacy-x86_64"
 

@@ -18,7 +18,7 @@ This project is prepared for three macOS release tracks:
 
 - Apple Silicon (`arm64`) for M-series Macs
 - Intel (`x86_64`) for older Intel Macs on newer supported macOS releases
-- Legacy Intel (`x86_64`) for Intel Macs that still need macOS 10.14.6 Mojave support
+- Legacy Intel (`x86_64`) for Intel Macs that still need macOS 10.14 Mojave support
 
 Important:
 

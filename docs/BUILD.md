@@ -48,7 +48,7 @@ PDF_TOOLBOX_UPGRADE_PIP=1 ./scripts/build_intel_release.sh
 
 ## Build legacy Intel / Mojave release
 
-For Intel Macs that need macOS `10.14.6` support, use:
+For Intel Macs that need macOS `10.14` Mojave support, use:
 
 - an actual Intel Mac, or
 - a true Rosetta / x86_64 Python 3.8 environment

@@ -8,7 +8,7 @@ Recommended filename:
 
 Target:
 
-- Intel Macs running macOS 10.14.6 Mojave or later
+- Intel Macs running macOS 10.14 Mojave or later
 
 Build this with:
 

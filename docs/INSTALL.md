@@ -6,7 +6,7 @@ Choose the release asset that matches the Mac:
 
 - `Apple Silicon`: M1, M2, M3, M4 Macs
 - `Intel`: older Intel Macs running macOS 11 or newer
-- `Legacy Intel`: Intel Macs that need macOS 10.14.6 Mojave support
+- `Legacy Intel`: Intel Macs that need macOS 10.14 Mojave support
 
 Download the `.zip` from the GitHub Release page, not from the repository file list.
 
