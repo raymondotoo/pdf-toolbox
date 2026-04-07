@@ -14,6 +14,7 @@ REQUIREMENTS_FILE="${PDF_TOOLBOX_REQUIREMENTS_FILE:-${ROOT_DIR}/requirements-mac
 BUILD_ENV="${ROOT_DIR}/${PDF_TOOLBOX_BUILD_ENV_NAME:-.venv-mac-app-${TARGET_ARCH}}"
 APP_BUNDLE="${ROOT_DIR}/dist/${APP_NAME}.app"
 FRAMEWORKS_DIR="${APP_BUNDLE}/Contents/Frameworks"
+RESOURCES_DIR="${APP_BUNDLE}/Contents/Resources"
 DIST_ZIP="${ROOT_DIR}/dist/${APP_NAME_SLUG}-macOS-${RELEASE_LABEL}-${VERSION}.zip"
 STAGED_ZIP="${ROOT_DIR}/release-assets/${RELEASE_DIR}/${APP_NAME_SLUG}-macOS-${RELEASE_LABEL}-${VERSION}.zip"
 
@@ -38,6 +39,18 @@ copy_if_exists() {
   chmod u+w "${FRAMEWORKS_DIR}/${target_name}"
 }
 
+copy_dir_if_exists() {
+  local source_path="$1"
+  local target_path="$2"
+  if [[ ! -d "${source_path}" ]]; then
+    echo "Skipping missing resource directory: ${source_path}"
+    return
+  fi
+
+  rm -rf "${target_path}"
+  cp -R "${source_path}" "${target_path}"
+}
+
 python_value() {
   local code="$1"
   "${BUILD_ENV}/bin/python" - <<PY
@@ -60,7 +73,7 @@ export PDF_TOOLBOX_MIN_MACOS="${MIN_MACOS}"
 
 "${BUILD_ENV}/bin/python" "${ROOT_DIR}/setup.py" py2app
 
-mkdir -p "${FRAMEWORKS_DIR}" "${ROOT_DIR}/release-assets/${RELEASE_DIR}"
+mkdir -p "${FRAMEWORKS_DIR}" "${RESOURCES_DIR}" "${ROOT_DIR}/release-assets/${RELEASE_DIR}"
 
 PYTHON_PREFIX="$(python_value 'import sys; print(sys.prefix)')"
 SITE_PACKAGES="$(python_value 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
@@ -74,6 +87,8 @@ copy_if_exists "${PYTHON_PREFIX}/lib/libcrypto.3.dylib"
 copy_if_exists "${PYTHON_PREFIX}/lib/libz.1.dylib"
 copy_if_exists "${PYTHON_PREFIX}/lib/libtk8.6.dylib"
 copy_if_exists "${PYTHON_PREFIX}/lib/libtcl8.6.dylib"
+copy_dir_if_exists "${PYTHON_PREFIX}/lib/tcl8.6" "${RESOURCES_DIR}/tcl8.6"
+copy_dir_if_exists "${PYTHON_PREFIX}/lib/tk8.6" "${RESOURCES_DIR}/tk8.6"
 copy_if_exists "${SITE_PACKAGES}/pymupdf/libmupdf.dylib"
 copy_if_exists "${SITE_PACKAGES}/pymupdf/libmupdfcpp.so"
 
